@@ -1,0 +1,57 @@
+<%= form_with(model: property, class: "contents") do |form| %>
+  <% if property.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(property.errors.count, "error") %> prohibited this property from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% property.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:user_id].none?, "border-red-400 focus:outline-red-600": property.errors[:user_id].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:title].none?, "border-red-400 focus:outline-red-600": property.errors[:title].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 4, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:description].none?, "border-red-400 focus:outline-red-600": property.errors[:description].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :price %>
+    <%= form.text_field :price, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:price].none?, "border-red-400 focus:outline-red-600": property.errors[:price].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :bedrooms %>
+    <%= form.number_field :bedrooms, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:bedrooms].none?, "border-red-400 focus:outline-red-600": property.errors[:bedrooms].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :bathrooms %>
+    <%= form.number_field :bathrooms, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:bathrooms].none?, "border-red-400 focus:outline-red-600": property.errors[:bathrooms].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :area %>
+    <%= form.number_field :area, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:area].none?, "border-red-400 focus:outline-red-600": property.errors[:area].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :status %>
+    <%= form.number_field :status, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:status].none?, "border-red-400 focus:outline-red-600": property.errors[:status].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
