@@ -19,11 +19,21 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      
-      <%= yield %>
+    <%= render "layouts/navbar" %>
+
+    <!--<main class="container mx-auto mt-28 px-5">-->
+    <main class="">
+      <div class="w-full flex flex-col">
+        <% if notice %>
+          <p class="notice bg-green-100 p-4 rounded mb-4"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert bg-red-100 p-4 rounded mb-4"><%= alert %></p>
+        <% end %>
+        <%= yield %>
+      </div>
     </main>
+
+    <script src="https://kit.fontawesome.com/7d639ddac3.js" crossorigin="anonymous"></script>
   </body>
 </html>

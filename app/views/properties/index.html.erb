@@ -1,25 +1,48 @@
-<% content_for :title, "Properties" %>
-
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-  <% end %>
-
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Properties</h1>
-    <%= link_to "New property", new_property_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+<div class="flex h-screen">
+  <!-- Properties List Column -->
+  <div class="container mx-auto px-4">
+    <h1 class="text-2xl font-bold mb-6">165 imóveis para alugar em Rio de Janeiro, RJ</h1>
+    
+    <div class="grid grid-cols-3 gap-6">
+      <% @properties.each do |property| %>
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+          <div class="relative">
+            <%= image_tag property.photos.first, class: "w-full h-48 object-cover" %>
+            <button class="absolute top-2 right-2 text-white bg-gray-500/50 rounded-full p-2 hover:bg-red-500/50">
+              <i class="fa-solid fa-heart"></i>
+            </button>
+          </div>
+          
+          <div class="p-4">
+            <h2 class="text-lg font-semibold mb-2 truncate"><%= property.title %></h2>
+            
+            <div class="text-sm text-gray-600 mb-3">
+              <p class="truncate">Endereço aqui</p>
+            </div>
+            
+            <div class="mb-3 text-sm text-gray-700">
+              <%= property.area %>m² · <%= property.bedrooms %> quartos · <%= property.bathrooms %> banheiros
+            </div>
+            
+            <div class="flex justify-between items-center">
+              <p class="text-xl font-bold text-gray-800">
+                R$ <%= number_with_delimiter(property.price) %>
+              </p>
+              
+              <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                <%= property.status %>
+              </span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-  <div id="properties" class="min-w-full">
-    <% if @properties.any? %>
-      <% @properties.each do |property| %>
-        <%= render property %>
-        <p>
-          <%= link_to "Show this property", property, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-        </p>
-      <% end %>
-    <% else %>
-      <p class="text-center my-10">No properties found.</p>
-    <% end %>
+  <!-- Map Column -->
+  <div class="w-2/3">
+    <div id="map" class="w-full h-full">
+      <%#= render 'shared/google_map', properties: @properties %>
+    </div>
   </div>
 </div>

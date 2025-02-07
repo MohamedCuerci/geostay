@@ -13,10 +13,12 @@ class PropertiesController < ApplicationController
   # GET /properties/new
   def new
     @property = Property.new
+    @property.build_address
   end
 
   # GET /properties/1/edit
   def edit
+    @property.build_address unless @property.address
   end
 
   # POST /properties or /properties.json
@@ -65,6 +67,9 @@ class PropertiesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def property_params
-      params.require(:property).permit(:user_id, :title, :description, :price, :bedrooms, :bathrooms, :area, :status)
+      params.require(:property).permit(
+        :user_id, :title, :description, :price, :bedrooms, :bathrooms, :area, :status, photos: [],
+        address_attributes: [ :id, :street, :number, :complement, :neighborhood, :city, :state, :country, :zipcode, :coordinates ]
+        )
     end
 end
