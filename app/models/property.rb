@@ -1,11 +1,16 @@
 class Property < ApplicationRecord
   belongs_to :user
   has_one :address, dependent: :destroy
+  delegate :coordinates, to: :address
   has_many_attached :photos, dependent: :destroy
 
   accepts_nested_attributes_for :address
 
-  # criar campos de enum
+  enum :status, {
+    sell: 0, # vender
+    rent: 1, # alugar
+    season: 2 # temporada (like airbnb)
+  }
 
   before_save :geocode_address
 

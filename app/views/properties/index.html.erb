@@ -40,9 +40,9 @@
   </div>
 
   <!-- Map Column -->
+  <%#= render 'shared/google_map', properties: @properties %>
   <div class="w-2/3">
-    <div id="map" class="w-full h-full">
-      <%#= render 'shared/google_map', properties: @properties %>
+    <div id="map" class="w-full h-full" data-controller="map" data-map-markers-value="<%= @markers.to_json %>">
     </div>
   </div>
 </div>

@@ -4,6 +4,21 @@ class PropertiesController < ApplicationController
   # GET /properties or /properties.json
   def index
     @properties = Property.all
+
+    @markers = @properties.map do |property|
+      {
+        id: property.id,
+        lat: property.coordinates.latitude,
+        lng: property.coordinates.longitude,
+        name: property.title
+      }
+
+      # marker[:distance] = property.distance_from(user_location) if user_location
+      # marker
+    end
+
+    # codigo pra ordenar pela distancia
+    # preciso usar o postgis para localizar no 10km mais perto
   end
 
   # GET /properties/1 or /properties/1.json
