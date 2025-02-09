@@ -1,47 +1,49 @@
 <div class="flex h-screen">
   <!-- Properties List Column -->
-  <div class="container mx-auto px-4">
+  <div class="container mx-auto px-4 overflow-y-auto">
     <h1 class="text-2xl font-bold mb-6">165 imóveis para alugar em Rio de Janeiro, RJ</h1>
     
     <div class="grid grid-cols-3 gap-6">
       <% @properties.each do |property| %>
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-          <div class="relative">
-            <%= image_tag property.photos.first, class: "w-full h-48 object-cover" %>
-            <button class="absolute top-2 right-2 text-white bg-gray-500/50 rounded-full p-2 hover:bg-red-500/50">
-              <i class="fa-solid fa-heart"></i>
-            </button>
-          </div>
-          
-          <div class="p-4">
-            <h2 class="text-lg font-semibold mb-2 truncate"><%= property.title %></h2>
-            
-            <div class="text-sm text-gray-600 mb-3">
-              <p class="truncate">Endereço aqui</p>
+        <%= link_to property_path(property), class: "block" do %>
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div class="relative">
+              <%= image_tag property.photos.first, class: "w-full h-48 object-cover" %>
+
+              <button class="absolute top-2 right-2 text-white bg-gray-500/50 rounded-full p-2 hover:bg-red-500/50" onclick="event.stopPropagation();">
+                <i class="fa-solid fa-heart"></i>
+              </button>
             </div>
             
-            <div class="mb-3 text-sm text-gray-700">
-              <%= property.area %>m² · <%= property.bedrooms %> quartos · <%= property.bathrooms %> banheiros
-            </div>
-            
-            <div class="flex justify-between items-center">
-              <p class="text-xl font-bold text-gray-800">
-                R$ <%= number_with_delimiter(property.price) %>
-              </p>
+            <div class="p-4">
+              <h2 class="text-lg font-semibold mb-2 truncate"><%= property.title %></h2>
               
-              <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                <%= property.status %>
-              </span>
+              <div class="text-sm text-gray-600 mb-3">
+                <p class="truncate">Endereço aqui</p>
+              </div>
+              
+              <div class="mb-3 text-sm text-gray-700">
+                <%= property.area %>m² · <%= property.bedrooms %> quartos · <%= property.bathrooms %> banheiros
+              </div>
+              
+              <div class="flex justify-between items-center">
+                <p class="text-xl font-bold text-gray-800">
+                  R$ <%= number_with_delimiter(property.price) %>
+                </p>
+                
+                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                  <%= property.status %>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
   </div>
 
   <!-- Map Column -->
-  <%#= render 'shared/google_map', properties: @properties %>
-  <div class="w-2/3">
+  <div class="w-2/3 h-screen sticky top-0">
     <div id="map" class="w-full h-full" data-controller="map" data-map-markers-value="<%= @markers.to_json %>">
     </div>
   </div>
