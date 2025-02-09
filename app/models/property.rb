@@ -6,6 +6,9 @@ class Property < ApplicationRecord
 
   accepts_nested_attributes_for :address
 
+  validates :title, :price, :zipcode, presence: true
+
+
   enum :status, {
     sell: 0, # vender
     rent: 1, # alugar

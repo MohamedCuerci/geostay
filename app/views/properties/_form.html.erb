@@ -12,11 +12,6 @@
   <% end %>
 
   <div class="my-5">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:user_id].none?, "border-red-400 focus:outline-red-600": property.errors[:user_id].any?}] %>
-  </div>
-
-  <div class="my-5">
     <%= form.label :title %>
     <%= form.text_field :title, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:title].none?, "border-red-400 focus:outline-red-600": property.errors[:title].any?}] %>
   </div>
@@ -34,8 +29,10 @@
   <div class="mb-4">
     <%= form.label :photos, "Fotos da propriedade", class: "block text-gray-700 font-medium mb-2" %>
 
-    <% property.photos.each do |photo| %>
-      <%= form.hidden_field :photos, multiple: true, value: photo.signed_id %>
+    <% if property.persisted? && property.photos.attached? %>
+      <% property.photos.each do |photo| %>
+        <%= form.hidden_field :photos, multiple: true, value: photos.signed_id %>
+      <% end %>
     <% end %>
 
     <div class="flex items-center">
@@ -80,12 +77,16 @@
     <%= form.number_field :area, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:area].none?, "border-red-400 focus:outline-red-600": property.errors[:area].any?}] %>
   </div>
 
+  <!--<div class="my-5">
+    <%#= form.label :status %>
+    <%#= form.select :status, Property.statuses.keys.map { |key| [key.humanize, key] }, {}, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:status].none?, "border-red-400 focus:outline-red-600": property.errors[:status].any?}] %>
+  </div>-->
+  
   <div class="my-5">
     <%= form.label :status %>
-    <%= form.number_field :status, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:status].none?, "border-red-400 focus:outline-red-600": property.errors[:status].any?}] %>
+    <%= form.select :status, [["Vender", :sell], ["Alugar", :rent], ["Temporada", :season]], {}, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:status].none?, "border-red-400 focus:outline-red-600": property.errors[:status].any?}] %>
   </div>
 
-aqui
   <%= form.fields_for :address do |address_form| %>
     <div data-controller="cep-lookup">
       <div class="my-5">
@@ -101,11 +102,6 @@ aqui
       <div class="my-5">
         <%= address_form.label :number %>
         <%= address_form.text_field :number, data: { 'cep-lookup-target': 'number' }, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:number].none?, "border-red-400 focus:outline-red-600": property.errors[:number].any?}] %>
-      </div>
-
-      <div class="my-5">
-        <%#= address_form.label :complement %>
-        <%#= address_form.text_field :complement, data: { 'cep-lookup-target': 'complement' }, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": property.errors[:complement].none?, "border-red-400 focus:outline-red-600": property.errors[:complement].any?}] %>
       </div>
 
       <div class="my-5">
