@@ -1,0 +1,8 @@
+pt-BR:
+  activerecord:
+    attributes:
+      property:
+        status:
+          sell: "Vender"
+          rent: "Alugar"
+          season: "Diária"
