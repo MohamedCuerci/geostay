@@ -56,7 +56,7 @@ end
 
 gem "tailwindcss-rails", "~> 4.0"
 
-gem "rspec-rails", "~> 7.0.0"
+gem "rspec-rails", "~> 7.1.1"
 
 gem "devise", "~> 4.9"
 
