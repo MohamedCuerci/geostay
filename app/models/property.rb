@@ -6,16 +6,29 @@ class Property < ApplicationRecord
 
   accepts_nested_attributes_for :address
 
+  before_save :geocode_address
+
   validates :title, presence: true
 
+  include PgSearch::Model
+  pg_search_scope :search_by_details,
+  against: :title,
+  associated_against: {
+    address: [ :street, :neighborhood, :city, :state ]
+  },
+  using: {
+    tsearch: { prefix: true }
+  }
+
+  scope :by_bedrooms, ->(bedrooms_number) { where(bedrooms: bedrooms_number) if bedrooms_number.present? }
+  scope :by_bathrooms, ->(bathrooms_number) { where(bathrooms: bathrooms_number) if bathrooms_number.present? }
+  scope :by_status, ->(status) { where(status: status) if status.present? }
 
   enum :status, {
     sell: 0, # vender
     rent: 1, # alugar
     season: 2 # temporada (like airbnb)
   }
-
-  before_save :geocode_address
 
   def geocode_address
     if address&.full_address.present? && address.coordinates.blank?

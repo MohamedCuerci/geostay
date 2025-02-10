@@ -6,6 +6,14 @@ class PropertiesController < ApplicationController
   def index
     @properties = Property.all
 
+    if params[:query].present?
+      @properties = @properties.search_by_details(params[:query])
+    end
+
+    @properties = @properties.by_bedrooms(params[:bedrooms]) if params[:bedrooms].present?
+    @properties = @properties.by_bathrooms(params[:bathrooms]) if params[:bathrooms].present?
+    @properties = @properties.by_status(params[:status]) if params[:status].present?
+
     @markers = @properties.map do |property|
       {
         id: property.id,
@@ -20,6 +28,11 @@ class PropertiesController < ApplicationController
 
     # codigo pra ordenar pela distancia
     # preciso usar o postgis para localizar no 10km mais perto
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   # GET /properties/1 or /properties/1.json

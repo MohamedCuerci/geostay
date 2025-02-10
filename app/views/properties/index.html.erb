@@ -1,8 +1,35 @@
 <div class="flex h-screen">
   <!-- Properties List Column -->
   <div class="container mx-auto px-4 overflow-y-auto">
+    <%= form_with(url: properties_path, method: :get, class: "mb-4") do |f| %>
+      <div class="flex items-center space-x-2">
+        <%= f.text_field :query, 
+            placeholder: "Buscar imóveis...",
+            value: params[:query], 
+            class: "flex-grow px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+        
+        <%= f.select :bedrooms, 
+            options_for_select((1..5).map { |n| [pluralize(n, 'quarto'), n] }, selected: params[:bedrooms]), 
+            { include_blank: "Quartos" }, 
+            class: "px-4 py-2 border rounded-md" %>
+        
+        <%= f.select :bathrooms, 
+            options_for_select((0..3).map { |n| [pluralize(n, 'banheiro'), n] }, selected: params[:bathrooms]), 
+            { include_blank: "Banheiros" }, 
+            class: "px-4 py-2 border rounded-md" %>
+          
+        <%= f.select :status, 
+            options_for_select(Property.statuses.keys.map { |status| [I18n.t("properties.status.#{status}"), status] }, selected: params[:status]), 
+            { include_blank: "Status" }, 
+            class: "px-4 py-2 border rounded-md" %>
+        
+        <%= f.submit "Search", class: "px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600" %>
+        <%= link_to "Limpar filtros", properties_path, class: "px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"  %>
+      </div>
+    <% end %>
+
     <h1 class="text-2xl font-bold mb-6"><%= @properties.count %> imóveis para alugar em Rio de Janeiro, RJ</h1>
-    
+
     <div class="grid grid-cols-3 gap-6">
       <% @properties.each do |property| %>
         <%= link_to property_path(property), class: "block" do %>
@@ -32,7 +59,7 @@
                 </p>
                 
                 <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                  <%= I18n.t("activerecord.attributes.property.status.#{property.status}") %>
+                  <%= I18n.t("properties.status.#{property.status}") %>
                 </span>
               </div>
             </div>
@@ -44,8 +71,8 @@
 
   <!-- Map Column -->
   <div class="w-2/3 h-screen sticky top-0" style="margin-bottom: 10px;">
-    <div id="map" class="w-full h-full" data-controller="map" data-map-markers-value="<%= @markers.to_json %>">
-    </div>
+    <!--<div id="map" class="w-full h-full" data-controller="map" data-map-markers-value="<%= @markers.to_json %>">
+    </div>-->
   </div>
 </div>
 <br>

@@ -62,3 +62,5 @@ gem "devise", "~> 4.9"
 
 gem "activerecord-postgis-adapter"
 gem "geocoder"
+
+gem "pg_search"

@@ -1,8 +1,6 @@
 pt-BR:
-  activerecord:
-    attributes:
-      property:
-        status:
-          sell: "Vender"
-          rent: "Alugar"
-          season: "Diária"
+  properties:
+    status:
+      sell: "Comprar"
+      rent: "Alugar"
+      season: "Diária"
